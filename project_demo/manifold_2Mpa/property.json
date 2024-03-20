@@ -1,0 +1,96 @@
+{
+    "project_name": {
+        "field": {
+            "solid": {
+                "linear_elasticity": {
+                    "boundary_condition": {
+                        "ConstraintSet": {
+                            "construct_function_name": "wall",
+                            "displacement": {
+                                "fixed": {
+                                    "value": [
+                                        0,
+                                        0,
+                                        0
+                                    ]
+                                }
+                            }
+                        },
+                        "LoadSet": {
+                            "construct_function_name": "wall",
+                            "displacement": {
+                                "pressure_load": {
+                                    "value": 1
+                                }
+                            }
+                        }
+                    },
+                    "displacement_solver": {
+                        "gmres": {
+                            "atol": 1e-05,
+                            "converged_max_it": true,
+                            "dtol": 1000,
+                            "maxit": 100000,
+                            "monitor_step": 50,
+                            "pc": {
+                                "boomer_amg": {
+                                    "atol": 0,
+                                    "coarsen_type": 6,
+                                    "converged_max_it": true,
+                                    "dtol": 1000,
+                                    "max_levels": 20,
+                                    "maxit": 1,
+                                    "monitor_step": 0,
+                                    "num_sweeps": 1,
+                                    "print_level": 0,
+                                    "relax_order": 1,
+                                    "relax_type": 3,
+                                    "rtol": 0,
+                                    "zero_initialize": false
+                                }
+                            },
+                            "restart": 50,
+                            "rtol": 1e-05,
+                            "zero_initialize": false
+                        }
+                    },
+                    "element": {
+                        "lagrangian": {
+                            "order": 1,
+                            "shape": "TET"
+                        }
+                    },
+                    "materials": {
+                        "material_model": "ThreeDimensional",
+                        "poissons_ratio": 0.35,
+                        "youngs_modulus": 2470
+                    }
+                }
+            }
+        },
+        "mesh": {
+            "manifold_2Mpa": {
+                "construct_function_name": "mesh_case",
+                "dimension": 3,
+                "m_mesh_file_list": [
+                    "F:/work_code/viewer/project_demo/manifold_2Mpa/manifold_2Mpa.ppu"
+                ]
+            }
+        },
+        "result": {
+            "file": "",
+            "format": "vts"
+        },
+        "solver": {
+            "process_num": 8,
+            "transient_controller": {
+                "cfl": 0,
+                "monitor_step": 0,
+                "steady": true,
+                "time_step": 1,
+                "total_time": 1,
+                "totaln": 5
+            }
+        }
+    }
+}

@@ -1,0 +1,186 @@
+{
+    "project_name": {
+        "field": {
+            "fluid": {
+                "incompressible_ns_U": {
+                    "boundary_condition": {
+                        "inflow": {
+                            "construct_function_name": "wall",
+                            "pressure": {
+                                "zero_gradient": {
+                                }
+                            },
+                            "velocity": {
+                                "fixed_value": {
+                                    "value": [
+                                        0,
+                                        0,
+                                        1
+                                    ]
+                                }
+                            }
+                        },
+                        "outflow": {
+                            "construct_function_name": "wall",
+                            "pressure": {
+                                "fixed_value": {
+                                    "value": 0
+                                }
+                            },
+                            "velocity": {
+                                "zero_gradient": {
+                                }
+                            }
+                        },
+                        "outflow1": {
+                            "construct_function_name": "wall",
+                            "pressure": {
+                                "fixed_value": {
+                                    "value": 0
+                                }
+                            },
+                            "velocity": {
+                                "zero_gradient": {
+                                }
+                            }
+                        },
+                        "outflow2": {
+                            "construct_function_name": "wall",
+                            "pressure": {
+                                "fixed_value": {
+                                    "value": 0
+                                }
+                            },
+                            "velocity": {
+                                "zero_gradient": {
+                                }
+                            }
+                        },
+                        "outflow3": {
+                            "construct_function_name": "wall",
+                            "pressure": {
+                                "fixed_value": {
+                                    "value": 0
+                                }
+                            },
+                            "velocity": {
+                                "zero_gradient": {
+                                }
+                            }
+                        },
+                        "wall": {
+                            "construct_function_name": "wall",
+                            "pressure": {
+                                "zero_gradient": {
+                                }
+                            },
+                            "velocity": {
+                                "wall": {
+                                }
+                            }
+                        }
+                    },
+                    "consistent": false,
+                    "initial_p": 0,
+                    "initial_u": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "mu": 0.1,
+                    "n_correctors": 1,
+                    "p_correctors": 1,
+                    "pressure_solver": {
+                        "gmres": {
+                            "atol": 1e-08,
+                            "converged_max_it": true,
+                            "dtol": 1000,
+                            "maxit": 100000,
+                            "monitor_step": 1000,
+                            "pc": {
+                                "boomer_amg": {
+                                    "atol": 0,
+                                    "coarsen_type": 6,
+                                    "converged_max_it": false,
+                                    "dtol": 1000,
+                                    "max_levels": 20,
+                                    "maxit": 1,
+                                    "monitor_step": 0,
+                                    "num_sweeps": 1,
+                                    "print_level": 0,
+                                    "relax_order": 1,
+                                    "relax_type": 3,
+                                    "rtol": 0,
+                                    "zero_initialize": false
+                                }
+                            },
+                            "restart": 30,
+                            "rtol": 1e-06,
+                            "zero_initialize": false
+                        }
+                    },
+                    "relaxion_factors_p": 0.3,
+                    "relaxion_factors_u": [
+                        0.7,
+                        0.7,
+                        0.7
+                    ],
+                    "rho": 1,
+                    "velocity_solver": {
+                        "gmres": {
+                            "atol": 1e-08,
+                            "converged_max_it": true,
+                            "dtol": 1000,
+                            "maxit": 100000,
+                            "monitor_step": 1000,
+                            "pc": {
+                                "boomer_amg": {
+                                    "atol": 0,
+                                    "coarsen_type": 6,
+                                    "converged_max_it": false,
+                                    "dtol": 1000,
+                                    "max_levels": 20,
+                                    "maxit": 1,
+                                    "monitor_step": 0,
+                                    "num_sweeps": 1,
+                                    "print_level": 0,
+                                    "relax_order": 1,
+                                    "relax_type": 3,
+                                    "rtol": 0,
+                                    "zero_initialize": false
+                                }
+                            },
+                            "restart": 30,
+                            "rtol": 1e-06,
+                            "zero_initialize": false
+                        }
+                    }
+                }
+            }
+        },
+        "mesh": {
+            "vessel_20240112": {
+                "construct_function_name": "mesh_case",
+                "dimension": 3,
+                "m_mesh_file_list": [
+                    "F:/work_code/viewer/project_demo/vessel_test/vessel_20240112.ppu"
+                ]
+            }
+        },
+        "result": {
+            "file": "",
+            "format": "vts"
+        },
+        "solver": {
+            "process_num": 20,
+            "transient_controller": {
+                "cfl": 0,
+                "monitor_step": 0,
+                "steady": true,
+                "time_step": 1,
+                "total_time": 1,
+                "totaln": 20
+            }
+        }
+    }
+}
