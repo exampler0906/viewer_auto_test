@@ -9,10 +9,13 @@ import sys
 def main():
     # request标题
     pull_reuqest_title = str(sys.argv[1])
+    print(pull_reuqest_title)
     # 最新评论
     newly_pull_reuqest_comment = str(sys.argv[2])
+    print(newly_pull_reuqest_comment)
     # viewer token
     token = str(sys.argv[3])
+    print(token)
 
     # 分离出原有pull request id
     pull_request_id = pull_reuqest_title.split(":")[-1]
