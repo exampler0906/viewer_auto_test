@@ -12,7 +12,7 @@ jobs:
          {
             Remove-Item viewer_auto_test -Recurse -Force 
          }
-         git clone -b ${{ github.event.pull_request.head.ref }} --single-branch git@github.com:exampler0906/viewer_auto_test.git
+         git clone -b ${{ github.event.pull_request.head.ref }}  git@github.com:exampler0906/viewer_auto_test.git
       working-directory: ./
 
     - name: Send Message And Create Label 
