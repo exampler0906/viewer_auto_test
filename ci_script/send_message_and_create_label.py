@@ -9,8 +9,10 @@ import sys
 def main():
     # request标题
     pull_reuqest_url = str(sys.argv[1])
+    # comment body
+    comment_body = str(sys.argv[2])
     # viewer token
-    token = str(sys.argv[2])
+    token = str(sys.argv[3])
     auth_header = {'Authorization': f'token {token}', 
                    'Accept': 'application/vnd.github.v3+json'}
 
@@ -21,27 +23,8 @@ def main():
     # 定义 GitHub API 的基础 URL 和认证头部
     base_url = "https://api.github.com"
 
-    # 获取最新的评论
-    newly_pull_reuqest_comment = ""
-    reuqest_url = pull_reuqest_url.replace("pull", "issues") + "/comments"
-    reuqest_url = reuqest_url.replace("https://github.com", base_url + "/repos")
-    response = requests.get(reuqest_url, headers=auth_header)
-    if response.status_code != 200:
-        print("error code:", response.status_code)
-        print("error msg:", response.text)
-    else:
-        comments = json.loads(response.text)
-        # 如果有评论，则返回最新评论
-        print(comments)
-        if comments:
-            # 根据评论创建时间进行排序，找到最新的评论
-            latest_comment = max(comments, key=lambda x: x['created_at'])
-            newly_pull_reuqest_comment = latest_comment['body']
-        else:
-            sys.exit(-1)
-
     # 构造消息体部分
-    result =  newly_pull_reuqest_comment + "\n" + source_pull_request_url
+    result =  comment_body + "\n" + source_pull_request_url
 
     # 构造消息json
     json_data = {}
@@ -62,7 +45,7 @@ def main():
         sys.exit(-1)
 
     # 如果测试通过，则为原有pull request创建test approve label
-    if newly_pull_reuqest_comment == "approve" or newly_pull_reuqest_comment == "Approve":
+    if comment_body == "approve" or comment_body == "Approve":
 
         # 定义要添加的标签和目标 pull request 的编号
         labels = ["test_approve"]
