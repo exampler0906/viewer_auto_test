@@ -18,11 +18,13 @@ def main():
 
     # 获取最新的评论
     newly_pull_reuqest_comment = ""
-
-    response = requests.get(pull_reuqest_url.replace("pull", "pulls") + "/comments")
+    reuqest_url = pull_reuqest_url.replace("pull", "pulls") + "/comments"
+    response = requests.get(reuqest_url)
     if response.status_code != 201:
         print("error code:", response.status_code)
         print("error msg:", response.text)
+        print(1)
+        print(reuqest_url)
     else:
         print(123)
         comments = response.json()
