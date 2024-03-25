@@ -11,6 +11,7 @@ def main():
     pull_reuqest_url = str(sys.argv[1])
     # viewer token
     token = str(sys.argv[2])
+    auth_header = {'Authorization': f'token {token}'}
 
     # 分离出原有pull request id
     pull_request_id = pull_reuqest_url.split("/")[-1]
@@ -19,7 +20,7 @@ def main():
     # 获取最新的评论
     newly_pull_reuqest_comment = ""
     reuqest_url = pull_reuqest_url.replace("pull", "pulls") + "/comments"
-    response = requests.get(reuqest_url)
+    response = requests.get(reuqest_url, headers=auth_header)
     if response.status_code != 201:
         print("error code:", response.status_code)
         print("error msg:", response.text)
@@ -62,7 +63,6 @@ def main():
     if newly_pull_reuqest_comment == "approve" or newly_pull_reuqest_comment == "Approve":
         # 定义 GitHub API 的基础 URL 和认证头部
         base_url = "https://api.github.com"
-        auth_header = {'Authorization': f'token {token}'}
 
         # 定义要添加的标签和目标 pull request 的编号
         labels = ["test_approve"]
