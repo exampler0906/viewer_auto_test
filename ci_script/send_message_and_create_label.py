@@ -65,7 +65,7 @@ def main():
         url = f"{base_url}/repos/icode-pku/viewer/issues/{source_pull_request_id}/labels"
 
         # 发送 PATCH 请求来给 pull request 添加标签
-        response = requests.post(url, headers=auth_header, json=labels_json.encode('utf-8'))
+        response = requests.post(url, headers=auth_header, json=labels.encode('utf-8'))
 
         # 检查响应是否成功
         if response.status_code == 200:
