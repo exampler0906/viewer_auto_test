@@ -32,6 +32,7 @@ def main():
     else:
         comments = json.loads(response.text)
         # 如果有评论，则返回最新评论
+        print(comments)
         if comments:
             # 根据评论创建时间进行排序，找到最新的评论
             latest_comment = max(comments, key=lambda x: x['created_at'])
