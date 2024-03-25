@@ -58,6 +58,7 @@ def main():
             sys.exit(-1)
 
         # 定义要添加的标签和目标 pull request 的编号
+        labels = {}
         labels["labels"] = ["bug"]
         labels = json.dumps(labels, ensure_ascii=False)
         print(labels)
