@@ -10,8 +10,7 @@ def main():
     # request标题
     pull_reuqest_url = str(sys.argv[1])
     # comment body
-    comment_body = sys.argv[2].encode('utf-8').decode('utf-8')
-    print(comment_body)
+    comment_body = str(sys.argv[2])
     # viewer token
     token = str(sys.argv[3])
 
