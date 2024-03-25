@@ -44,9 +44,6 @@ def main():
     # 构造飞书消息体部分
     result =  comment_body + "\n" + source_pull_request_url + " @" + checker_name
 
-# 获取特定键的值
-value = data['key']
-
     # 构造消息json
     json_data = {}
     json_data["msg_type"]= "text" 
