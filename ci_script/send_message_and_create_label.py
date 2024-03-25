@@ -11,7 +11,8 @@ def main():
     pull_reuqest_url = str(sys.argv[1])
     # viewer token
     token = str(sys.argv[2])
-    auth_header = {'Authorization': f'token {token}'}
+    auth_header = {'Authorization': f'token {token}', 
+                   'Accept': 'application/vnd.github.v3+json'}
 
     # 分离出原有pull request id
     pull_request_id = pull_reuqest_url.split("/")[-1]
