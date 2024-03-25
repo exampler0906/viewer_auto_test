@@ -60,15 +60,13 @@ def main():
         # 定义要添加的标签和目标 pull request 的编号
         labels = {}
         labels["labels"] = ["bug"]
-        labels = json.dumps(labels, ensure_ascii=False)
-        print(labels)
+        labels_json = json.dumps(labels, ensure_ascii=False)
 
         # 构建 API 请求的 URL
         url = f"{base_url}/repos/icode-pku/viewer/issues/{source_pull_request_id}/labels"
-        print(url)
 
         # 发送 PATCH 请求来给 pull request 添加标签
-        response = requests.post(url, headers=auth_header, json=labels.encode('utf-8'))
+        response = requests.post(url, headers=auth_header, json=labels_json.encode('utf-8'))
 
         # 检查响应是否成功
         if response.status_code == 200:
