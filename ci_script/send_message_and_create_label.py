@@ -60,7 +60,6 @@ def main():
         # 定义要添加的标签和目标 pull request 的编号
         labels = {}
         labels["labels"] = ["bug"]
-        labels_json = json.dumps(labels, ensure_ascii=False)
 
         # 构建 API 请求的 URL
         url = f"{base_url}/repos/icode-pku/viewer/issues/{source_pull_request_id}/labels"
