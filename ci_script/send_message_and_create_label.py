@@ -23,7 +23,7 @@ def main():
 
     # 获取最新的评论
     newly_pull_reuqest_comment = ""
-    reuqest_url = pull_reuqest_url.replace("pull", "pulls") + "/comments"
+    reuqest_url = pull_reuqest_url.replace("pull", "issues") + "/comments"
     reuqest_url = reuqest_url.replace("https://github.com", base_url + "/repos")
     response = requests.get(reuqest_url, headers=auth_header)
     if response.status_code != 200:
