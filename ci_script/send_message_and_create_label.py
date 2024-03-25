@@ -25,7 +25,7 @@ def main():
     reuqest_url = pull_reuqest_url.replace("pull", "pulls") + "/comments"
     reuqest_url = reuqest_url.replace("https://github.com", base_url + "/repos")
     response = requests.get(reuqest_url, headers=auth_header)
-    if response.status_code != 201:
+    if response.status_code != 200:
         print("error code:", response.status_code)
         print("error msg:", response.text)
         print(1)
