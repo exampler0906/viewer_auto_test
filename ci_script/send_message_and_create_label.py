@@ -37,7 +37,7 @@ def main():
     
     # 获取检查者信息
     # 打开 JSON 文件并读取内容
-    with open('users_list.json', 'r', encoding='utf-8') as f:
+    with open('users_list.json', 'r', encoding='utf-8-sig') as f:
         data = json.load(f)
         checker_name = data["checker"]["name"]
 
