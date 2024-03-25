@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# pull requestÊ±½øĞĞÏûÏ¢×ª·¢
+ï»¿# -*- coding: utf-8 -*-
+# pull requestæ—¶è¿›è¡Œæ¶ˆæ¯è½¬å‘
 
 import os
 import requests
@@ -7,21 +7,21 @@ import json
 import sys
 
 def main():
-    # request±êÌâ
+    # requestæ ‡é¢˜
     pull_reuqest_url = str(sys.argv[1])
     # comment body
     comment_body = str(sys.argv[2])
     # viewer token
     token = str(sys.argv[3])
 
-    # ÉèÖÃhttpµÄÇëÇóÍ·
+    # è®¾ç½®httpçš„è¯·æ±‚å¤´
     auth_header = {'Authorization': f'token {token}', 
                    'Accept': 'application/vnd.github.v3+json'}
 
-    # ·ÖÀë³öµ±Ç°pull request id
+    # åˆ†ç¦»å‡ºå½“å‰pull request id
     pull_request_id = pull_reuqest_url.split("/")[-1]
 
-    # »ñÈ¡µ±Ç°pull requestµÄ±êÌâ£¬ÒÔ»ñÈ¡Ô­ÓĞpull requestµÄid
+    # è·å–å½“å‰pull requestçš„æ ‡é¢˜ï¼Œä»¥è·å–åŸæœ‰pull requestçš„id
     response = requests.get(f"https://api.github.com/repos/exampler0906/viewer_auto_test/pulls/{pull_request_id}")
     if response.status_code == 200:
         pull_request_data = response.json()
@@ -32,45 +32,45 @@ def main():
         sys.exit(-1)
     source_pull_request_url = "https://github.com/icode-pku/viewer/pull/" + source_pull_request_id
 
-    # ¶¨Òå GitHub API µÄ»ù´¡ URL ºÍÈÏÖ¤Í·²¿
+    # å®šä¹‰ GitHub API çš„åŸºç¡€ URL å’Œè®¤è¯å¤´éƒ¨
     base_url = "https://api.github.com"
 
-    # ¹¹Ôì·ÉÊéÏûÏ¢Ìå²¿·Ö
-    result =  comment_body + "\n" + source_pull_request_url + " @" + "<at user_id=\"all\">ËùÓĞÈË</at>"
+    # æ„é€ é£ä¹¦æ¶ˆæ¯ä½“éƒ¨åˆ†
+    result =  comment_body + "\n" + source_pull_request_url + "<at user_id=\"all\">æ‰€æœ‰äºº</at>"
 
-    # ¹¹ÔìÏûÏ¢json
+    # æ„é€ æ¶ˆæ¯json
     json_data = {}
     json_data["msg_type"]= "text" 
     json_data["content"]= { "text": result }
     json_string = json.dumps(json_data, ensure_ascii=False)
 
-    # ½«ÏûÏ¢Í¨¹ıwebhookµÄ·½Ê½×ª·¢µ½·ÉÊé
+    # å°†æ¶ˆæ¯é€šè¿‡webhookçš„æ–¹å¼è½¬å‘åˆ°é£ä¹¦
     response = requests.post(
     "https://open.feishu.cn/open-apis/bot/v2/hook/13530db3-8fb8-47be-9456-59aea6699c88",
     headers={'Content-Type': 'application/json'},
     data=json_string.encode('utf-8'))
     
-    # Èç¹ûÇëÇó´íÎóÔò´òÓ¡´íÎóĞÅÏ¢
+    # å¦‚æœè¯·æ±‚é”™è¯¯åˆ™æ‰“å°é”™è¯¯ä¿¡æ¯
     if response.status_code != 200:
         print("error code:", response.status_code)
         print("error msg:", response.text)
         sys.exit(-1)
     print("send message successfully.")
 
-    # Èç¹û²âÊÔÍ¨¹ı£¬ÔòÎªÔ­ÓĞpull request´´½¨test approve label
+    # å¦‚æœæµ‹è¯•é€šè¿‡ï¼Œåˆ™ä¸ºåŸæœ‰pull requeståˆ›å»ºtest approve label
     if comment_body == "approve" or comment_body == "Approve":
 
-        # ¶¨ÒåÒªÌí¼ÓµÄ±êÇ©ºÍÄ¿±ê pull request µÄ±àºÅ
+        # å®šä¹‰è¦æ·»åŠ çš„æ ‡ç­¾å’Œç›®æ ‡ pull request çš„ç¼–å·
         labels = {}
         labels["labels"] = ["test approve"]
 
-        # ¹¹½¨ API ÇëÇóµÄ URL
+        # æ„å»º API è¯·æ±‚çš„ URL
         url = f"{base_url}/repos/icode-pku/viewer/issues/{source_pull_request_id}/labels"
 
-        # ·¢ËÍ PATCH ÇëÇóÀ´¸ø pull request Ìí¼Ó±êÇ©
+        # å‘é€ PATCH è¯·æ±‚æ¥ç»™ pull request æ·»åŠ æ ‡ç­¾
         response = requests.post(url, headers=auth_header, json=labels)
 
-        # ¼ì²éÏìÓ¦ÊÇ·ñ³É¹¦
+        # æ£€æŸ¥å“åº”æ˜¯å¦æˆåŠŸ
         if response.status_code == 200:
             print("labels added successfully.")
         else:
