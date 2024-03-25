@@ -36,7 +36,7 @@ def main():
     base_url = "https://api.github.com"
 
     # 构造飞书消息体部分
-    result =  comment_body + "\n" + source_pull_request_url + "@赵伟鹏"
+    result =  str(comment_body + "\n" + source_pull_request_url + "@赵伟鹏").encode('utf-8')
 
     # 构造消息json
     json_data = {}
