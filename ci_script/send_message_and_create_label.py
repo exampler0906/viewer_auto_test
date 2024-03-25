@@ -28,11 +28,10 @@ def main():
     if response.status_code != 200:
         print("error code:", response.status_code)
         print("error msg:", response.text)
-        print(1)
-        print(reuqest_url)
     else:
         print(123)
         comments = response.json()
+        print(str(response))
         print(comments)
         # 如果有评论，则返回最新评论
         if comments:
