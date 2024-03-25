@@ -1,10 +1,15 @@
 name: send message when pull request has new comment
 
-on: issue_comment
+on: 
+  issue_comment:
+    branches-ignore:
+      - 'txm**'
+      - 'zwp**'
 
 jobs:
   send_message:
     runs-on: Windows
+    if: ${{ github.event.issue.pull_request }}
     steps:
     - name: Get Current Code
       run: |
@@ -12,11 +17,11 @@ jobs:
          {
             Remove-Item viewer_auto_test -Recurse -Force 
          }
-         git clone -b ${{ github.event.pull_request.head.ref }} git@github.com:exampler0906/viewer_auto_test.git
+         git clone git@github.com:exampler0906/viewer_auto_test.git
       working-directory: ./
 
     - name: Send Message And Create Label 
       run: |
          cd viewer_auto_test/ci_script
-         python send_message_and_create_label.py ${{ github.event.pull_request.title }} ${{ github.event.review.body }} ${{secrets.VIEWER_TOKEN}}
+         python send_message_and_create_label.py ${{ github.event.issue.pull_request.html_url }} ${{ secrets.VIEWER_TOKEN }}
       working-directory: ./
