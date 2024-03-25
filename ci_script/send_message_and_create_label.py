@@ -18,7 +18,8 @@ def main():
 
     # 获取最新的评论
     newly_pull_reuqest_comment = ""
-    response = requests.get(pull_reuqest_url + "/comments")
+
+    response = requests.get(pull_reuqest_url.replace("pull", "pulls") + "/comments")
     if response.status_code != 200:
         print("error code:", response.status_code)
         print("error msg:", response.text)
