@@ -47,11 +47,21 @@ def main():
     # 如果测试通过，则为原有pull request创建test approve label
     if comment_body == "approve" or comment_body == "Approve":
 
+        # 获取当前pull request的标题
+        response = requests.get(f"https://api.github.com/repos/exampler0906/viewer_auto_test/pulls/{pull_request_id}")
+        if response.status_code == 200:
+            pull_request_data = response.json()
+            pull_request_title = pull_request_data['title']
+            source_pull_request_id = pull_request_title.split(":")[-1]
+        else:
+            print("Failed to fetch pull request information.")
+            sys.exit(-1)
+
         # 定义要添加的标签和目标 pull request 的编号
         labels = ["test_approve"]
 
         # 构建 API 请求的 URL
-        url = f"{base_url}/repos/icode-pku/viewer/issues/{pull_request_id}/labels"
+        url = f"{base_url}/repos/icode-pku/viewer/issues/{source_pull_request_id}/labels"
 
         # 发送 PATCH 请求来给 pull request 添加标签
         response = requests.post(url, headers=auth_header, json=labels)
