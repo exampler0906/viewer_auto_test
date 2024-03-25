@@ -13,17 +13,29 @@ def main():
     comment_body = str(sys.argv[2])
     # viewer token
     token = str(sys.argv[3])
+
+    # 设置http的请求头
     auth_header = {'Authorization': f'token {token}', 
                    'Accept': 'application/vnd.github.v3+json'}
 
-    # 分离出原有pull request id
+    # 分离出当前pull request id
     pull_request_id = pull_reuqest_url.split("/")[-1]
-    source_pull_request_url = "https://github.com/icode-pku/viewer/pull/" + pull_request_id
+
+    # 获取当前pull request的标题，以获取原有pull request的id
+    response = requests.get(f"https://api.github.com/repos/exampler0906/viewer_auto_test/pulls/{pull_request_id}")
+    if response.status_code == 200:
+        pull_request_data = response.json()
+        pull_request_title = pull_request_data['title']
+        source_pull_request_id = pull_request_title.split(":")[-1]
+    else:
+        print("failed to fetch source pull request information.")
+        sys.exit(-1)
+    source_pull_request_url = "https://github.com/icode-pku/viewer/pull/" + source_pull_request_id
 
     # 定义 GitHub API 的基础 URL 和认证头部
     base_url = "https://api.github.com"
 
-    # 构造消息体部分
+    # 构造飞书消息体部分
     result =  comment_body + "\n" + source_pull_request_url
 
     # 构造消息json
@@ -43,19 +55,10 @@ def main():
         print("error code:", response.status_code)
         print("error msg:", response.text)
         sys.exit(-1)
+    print("send message successfully.")
 
     # 如果测试通过，则为原有pull request创建test approve label
     if comment_body == "approve" or comment_body == "Approve":
-
-        # 获取当前pull request的标题
-        response = requests.get(f"https://api.github.com/repos/exampler0906/viewer_auto_test/pulls/{pull_request_id}")
-        if response.status_code == 200:
-            pull_request_data = response.json()
-            pull_request_title = pull_request_data['title']
-            source_pull_request_id = pull_request_title.split(":")[-1]
-        else:
-            print("Failed to fetch pull request information.")
-            sys.exit(-1)
 
         # 定义要添加的标签和目标 pull request 的编号
         labels = {}
@@ -69,11 +72,11 @@ def main():
 
         # 检查响应是否成功
         if response.status_code == 200:
-            print("Labels added successfully.")
+            print("labels added successfully.")
         else:
-            print("Failed to add labels.")
-            print("Status code:", response.status_code)
-            print("Error message:", response.text)
+            print("failed to add labels.")
+            print("status code:", response.status_code)
+            print("error message:", response.text)
             sys.exit(-1)
 
 if __name__ == "__main__":
