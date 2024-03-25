@@ -30,8 +30,7 @@ def main():
         print("error msg:", response.text)
     else:
         print(123)
-        comments = response.json()
-        print(str(response))
+        comments = json.loads(response.text)
         print(comments)
         # 如果有评论，则返回最新评论
         if comments:
