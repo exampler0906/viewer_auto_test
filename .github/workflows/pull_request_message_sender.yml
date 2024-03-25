@@ -23,5 +23,6 @@ jobs:
     - name: Send Message And Create Label 
       run: |
          cd viewer_auto_test/ci_script
+         echo "${{ github.event.comment.body }}"
          python send_message_and_create_label.py "${{ github.event.issue.pull_request.html_url }}" "${{ github.event.comment.body }}" "${{ secrets.VIEWER_TOKEN }}"
       working-directory: ./
