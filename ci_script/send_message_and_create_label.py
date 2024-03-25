@@ -62,6 +62,7 @@ def main():
 
         # 构建 API 请求的 URL
         url = f"{base_url}/repos/icode-pku/viewer/issues/{source_pull_request_id}/labels"
+        print(url)
 
         # 发送 PATCH 请求来给 pull request 添加标签
         response = requests.post(url, headers=auth_header, json=labels)
