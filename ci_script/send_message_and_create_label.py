@@ -55,7 +55,7 @@ def main():
         print("error code:", response.status_code)
         print("error msg:", response.text)
         sys.exit(-1)
-    print("send message successfully.")
+    print("send message to feishu successfully.")
 
     # 如果测试通过，则为原有pull request创建test approve label
     if comment_body == "approve" or comment_body == "Approve":
