@@ -34,15 +34,9 @@ def main():
 
     # 定义 GitHub API 的基础 URL 和认证头部
     base_url = "https://api.github.com"
-    
-    # 获取检查者信息
-    # 打开 JSON 文件并读取内容
-    with open('users_list.json', 'r', encoding='utf-8-sig') as f:
-        data = json.load(f)
-        checker_name = data["checker"]["name"]
 
     # 构造飞书消息体部分
-    result =  comment_body + "\n" + source_pull_request_url + " @" + checker_name
+    result =  comment_body + "\n" + source_pull_request_url + " @" + "<at user_id=\"all\">所有人</at>"
 
     # 构造消息json
     json_data = {}
