@@ -1,7 +1,7 @@
 name: send message when pull request has new comment
 
 on: 
-  issue_comment:
+  pull_request_review:
     branches-ignore:
       - 'txm**'
       - 'zwp**'
@@ -22,8 +22,8 @@ jobs:
     - name: Send Message And Create Label 
       run: |
          cd viewer_auto_test/ci_script
-         echo "${{ github.event.issue.pull_request.title }}"
-         echo "${{ github.event.issue.review.body }}"
+         echo "${{ github.event.pull_request.title }}"
+         echo "${{ github.event.review.body }}"
          echo "${{ secrets.VIEWER_TOKEN }}"
-         python send_message_and_create_label.py ${{ github.event.issue.pull_request.title }} ${{ github.event.issue.review.body }} ${{ secrets.VIEWER_TOKEN }}
+         python send_message_and_create_label.py ${{ github.event.pull_request.title }} ${{ github.event.review.body }} ${{ secrets.VIEWER_TOKEN }}
       working-directory: ./
