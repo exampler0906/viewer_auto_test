@@ -30,10 +30,7 @@ def main():
         print("error code:", response.status_code)
         print("error msg:", response.text)
     else:
-        print(123)
-        print(response.text)
         comments = json.loads(response.text)
-        print(comments)
         # 如果有评论，则返回最新评论
         if comments:
             # 根据评论创建时间进行排序，找到最新的评论
@@ -70,7 +67,7 @@ def main():
         labels = ["test_approve"]
 
         # 构建 API 请求的 URL
-        url = f"{base_url}/repos/owner/repository/issues/{pull_request_id}/labels"
+        url = f"{base_url}/repos/icode-pku/viewer/issues/{pull_request_id}/labels"
 
         # 发送 PATCH 请求来给 pull request 添加标签
         response = requests.post(url, headers=auth_header, json=labels)
