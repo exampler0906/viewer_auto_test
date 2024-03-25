@@ -20,7 +20,7 @@ def main():
     newly_pull_reuqest_comment = ""
 
     response = requests.get(pull_reuqest_url.replace("pull", "pulls") + "/comments")
-    if response.status_code != 200:
+    if response.status_code != 201:
         print("error code:", response.status_code)
         print("error msg:", response.text)
     else:
