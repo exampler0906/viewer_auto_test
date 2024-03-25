@@ -24,6 +24,7 @@ def main():
         print("error code:", response.status_code)
         print("error msg:", response.text)
     else:
+        print(123)
         comments = response.json()
         print(comments)
         # 如果有评论，则返回最新评论
