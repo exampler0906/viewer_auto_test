@@ -36,7 +36,7 @@ def main():
     base_url = "https://api.github.com"
 
     # 构造飞书消息体部分
-    result =  comment_body + "\n" + source_pull_request_url + "<at user_id=\"all\">所有人</at>"
+    result =  comment_body + "\n" + source_pull_request_url
 
     # 构造消息json
     json_data = {}
