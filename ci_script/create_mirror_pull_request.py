@@ -66,26 +66,27 @@ def create_or_edit_pull_request(all_open_pull_requests, source_pull_request_numb
         if response.status_code == 200:
             # 返回 pull request 的描述
             description = response.json().get('body')
-            if check_str in description:
+            if not description == None:
+                if check_str in description:
                 
-                # 构建要发送的数据
-                data = {"body": new_description}
-                json_data = json.dumps(data, ensure_ascii=False)
+                    # 构建要发送的数据
+                    data = {"body": new_description}
+                    json_data = json.dumps(data, ensure_ascii=False)
 
-                # 发送 PATCH 请求以更新 Pull Request 的描述
-                response = requests.patch(url,
-                                          headers={
-                                          'Authorization': f'Bearer {viewer_auto_test_token}',
-                                          'Accept': 'application/vnd.github.v3+json'},
-                                          data=json_data.encode('utf-8'))
+                    # 发送 PATCH 请求以更新 Pull Request 的描述
+                    response = requests.patch(url,
+                                              headers={
+                                              'Authorization': f'Bearer {viewer_auto_test_token}',
+                                              'Accept': 'application/vnd.github.v3+json'},
+                                              data=json_data.encode('utf-8'))
 
-                # 检查响应状态码
-                if response.status_code == 200:
-                    is_edit = True
-                    print(f"pull request {pull_request_number} description updated successfully.")
-                else:
-                    print(f"failed to update description for pull request {pull_request_number}.")
-                    sys.exit(-1)
+                    # 检查响应状态码
+                    if response.status_code == 200:
+                        is_edit = True
+                        print(f"pull request {pull_request_number} description updated successfully.")
+                    else:
+                        print(f"failed to update description for pull request {pull_request_number}.")
+                        sys.exit(-1)
         else:
             print(f"failed to fetch pull request description for PR {pull_request_number}")
             continue
