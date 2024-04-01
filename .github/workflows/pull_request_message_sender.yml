@@ -3,7 +3,7 @@ name: send message when pull request has new comment
 on: 
   issue_comment:
     branches-ignore:
-      - 'txm**'
+      - 'tmx**'
       - 'zwp**'
 
 jobs:
