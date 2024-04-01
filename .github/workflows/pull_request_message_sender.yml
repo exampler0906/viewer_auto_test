@@ -13,11 +13,18 @@ jobs:
     steps:
     - name: Get Current Code
       run: |
-         if (Test-Path viewer_auto_test) 
+         if (Test-Path viewer_auto_test)
          {
-            Remove-Item viewer_auto_test -Recurse -Force 
+            cd viewer_auto_test
+            git checkout -b temp
+            git fetch origin master::master
+            git checkout master
+            git branch -D temp
          }
-         git clone git@github.com:exampler0906/viewer_auto_test.git
+         else
+         {
+            git clone git@github.com:exampler0906/viewer_auto_test.git
+         }
       working-directory: ./
 
     - name: Send Message And Create Label 
