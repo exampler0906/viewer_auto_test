@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     funcs.cpp \
+    insertkvpairinjson.cpp \
     main.cpp \
     widget.cpp
 
 HEADERS += \
     funcs.h \
+    insertkvpairinjson.h \
     widget.h
 
 FORMS += \
