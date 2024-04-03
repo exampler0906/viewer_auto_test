@@ -16,6 +16,8 @@ jobs:
          if (Test-Path viewer_auto_test)
          {
             cd viewer_auto_test
+            git checkout . 
+            git clean -df
             git checkout -b temp
             git fetch origin master::master
             git checkout master
