@@ -86,9 +86,13 @@ def create_or_edit_pull_request(all_open_pull_requests, source_pull_request_numb
                         print(f"pull request {pull_request_number} description updated successfully.")
                     else:
                         print(f"failed to update description for pull request {pull_request_number}.")
+                        print("error code:", response.status_code)
+                        print("error msg:", response.text)
                         sys.exit(-1)
         else:
             print(f"failed to fetch pull request description for PR {pull_request_number}")
+            print("error code:", response.status_code)
+            print("error msg:", response.text)
             continue
     
     # 这种情况说明mirror pull request没有被创建，就创建一个

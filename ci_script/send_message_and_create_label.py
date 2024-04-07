@@ -29,6 +29,8 @@ def main():
         source_pull_request_id = pull_request_title.split(":")[-1]
     else:
         print("failed to fetch source pull request information.")
+        print("error code:", response.status_code)
+        print("error msg:", response.text)
         sys.exit(-1)
     source_pull_request_url = "https://github.com/icode-pku/viewer/pull/" + source_pull_request_id
 

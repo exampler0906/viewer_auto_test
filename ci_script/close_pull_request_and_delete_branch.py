@@ -61,9 +61,13 @@ def close_pull_request(source_pull_request_number, viewer_auto_test_token):
                         print(f"pull request {pull_request_number} close successfully.")
                     else:
                         print(f"failed to close pull request {pull_request_number}.")
+                        print("error code:", response.status_code)
+                        print("error msg:", response.text)
                         sys.exit(-1)
         else:
             print(f"failed to fetch pull request description for PR {pull_request_number}")
+            print("error code:", response.status_code)
+            print("error msg:", response.text)
             continue
 
 
@@ -81,6 +85,8 @@ def delete_branch(source_pull_request_number, viewer_auto_test_token):
         print(f"delete branch {source_pull_request_number} successfully.")
     else:
         print(f"failed to delete branch {source_pull_request_number}.")
+        print("error code:", response.status_code)
+        print("error msg:", response.text)
         sys.exit(-1)
 
 def main():
