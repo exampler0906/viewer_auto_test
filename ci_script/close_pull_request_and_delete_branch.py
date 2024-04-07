@@ -72,7 +72,7 @@ def close_pull_request(source_pull_request_number, viewer_auto_test_token):
 
 
 def delete_branch(source_pull_request_number, viewer_auto_test_token):
-    url = f"https://api.github.com/repos/exampler0906/viewer_auto_test/git/refs/{source_pull_request_number}"
+    url = f"https://api.github.com/repos/exampler0906/viewer_auto_test/git/refs/heads/{source_pull_request_number}"
 
     # 删除对应分支
     response = requests.delete(url,
