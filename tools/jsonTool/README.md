@@ -1,42 +1,112 @@
 # jsonTool
 
-## insertKVPair
+## 随机插入
 
-可以使用`insertKVPair className(QString srcStr)`实例化一个类名为`className`的类，`srcStr`是从输入框中读取的`QString `，类中的主要成员函数为：
+### 使用说明
 
-1. `QJsonObject getJsonObj()`
+![image-20240410155913252](./img/image-20240410155913252.png)
 
-    直接返回类中的成员变量`m_obj`；
+可在左上方输入框输入待插入的字符串，如：
 
-2. `void insertKVPairInEveryDepth()`
+```json
+{"msg_type": "text", "content": {"text": "111"}}
+```
 
-    在`QJsonObject`的所有层级下，插入一个合法的键值对；
+点击插入：
 
-3. `void randomInsertKVPairInRandomDepth(double stopProbability = 0.6);`
+![image-20240410161844206](./img/image-20240410161844206.png)
 
-    在QJsonObject的随机层级下，插入一个合法的键值对，`stopProbability`停止概率，当小于该概率时，直接在当前层级下插入，否则继续遍历。
+左下方会将未格式化的Json对象格式化后输出，右侧会输出在源Json每一个层级下都插入一个合法键值对后的结果。
 
-## compareJson
+### 错误类型
 
-可以使用`compareJson className(QString srcStr1, QString srcStr2)`实例化一个类名为`className`的类，`srcStr1`和`srcStr2`是从输入框中读取的两个欲进行比较的`QString`，类中的主要成员函数为：
+若输入非法Json对象：
 
-1. `QJsonObject getJsonObj1()`
+```json
+{"msg_type": "text", "content": {"text": "111"}
+```
 
-    直接返回类中的成员变量`m_obj1`；
+工具会提示输入非法，并清空格式化输入和输出框：
 
-2. `QJsonObject getJsonObj2()`
+![image-20240410163635342](./img/image-20240410163635342.png)
 
-    直接返回类中的成员变量`m_obj2`；
+## 比较Json
 
-3. `int compare()`
+### 使用说明
 
-    返回一个`int`，可能的返回值如下：
+![image-20240410163729474](./img/image-20240410163729474.png)
 
-    - 0：两`json`相等
-    - 1：`json1`是`json2`的子集
-    - 2：`json2`是`json1`的子集
-    - 3：`json1`中存在`json2`中没有的键值对
-    - 4：`json2`中存在`json1`中没有的键值对
+可以在输入1和输入2框内分别输入待比较的字符串：
 
-    其中`json1`和`json2`分别指`srcStr1`和`srcStr2`代表的`QJsonObject`。
+- 兼容情况，两边都输入下面的Json对象：
 
+    ```json
+    {"msg_type": "text", "content": {"text": "111"}}
+    ```
+
+    工具输出为：
+
+    ![image-20240410164904422](./img/image-20240410164904422.png)
+
+- 兼容情况：
+
+    输入1输入：
+
+    ```json
+    {"msg_type": "text", "content": {"text": "111"}}
+    ```
+
+    输入2输入：
+
+    ```json
+    {
+        "5TlB3": null,
+        "content": {
+            "text": "111"
+        },
+        "msg_type": "text"
+    }
+    ```
+
+    工具输出为：
+
+    ![image-20240410165440110](./img/image-20240410165440110.png)
+
+- 不兼容的情况：
+
+    输入1输入：
+
+    ```json
+    {"msg_type": "text", "content": {"text": "111"}}
+    ```
+
+    输入2输入：
+
+    ```json
+    {
+        "5TlB3": null,
+        "content": {
+            "text": "111",
+            "y4nmV": true
+        },
+        "msg_type": "text"
+    }
+    ```
+
+    工具输出为：
+
+    ![image-20240410165445772](./img/image-20240410165445772.png)
+
+### 错误类型
+
+若在输入1或者输入2输入非法Json对象：
+
+```json
+{"msg_type": "text", "content": {"text": "111"}
+```
+
+会提示输入非法：
+
+![image-20240410165639326](./img/image-20240410165639326.png)
+
+![image-20240410165646715](./img/image-20240410165646715.png)
