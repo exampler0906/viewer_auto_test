@@ -9,7 +9,7 @@
 class compareJson
 {
 public:
-    static bool isCompatible(const QJsonObject &json1, const QJsonObject &json2);
+    static bool isCompatible(QJsonObject json1, QJsonObject json2);
 };
 
 #endif // COMPAREJSON_H
