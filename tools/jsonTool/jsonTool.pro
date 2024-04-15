@@ -16,16 +16,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    insertkvpairinjson.cpp \
+    comparejson.cpp \
+    insertkvpair.cpp \
     main.cpp \
-    widget.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    insertkvpairinjson.h \
-    widget.h
+    comparejson.h \
+    insertkvpair.h \
+    mainwindow.h
 
 FORMS += \
-    widget.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

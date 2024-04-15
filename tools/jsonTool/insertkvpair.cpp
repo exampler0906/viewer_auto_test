@@ -1,6 +1,6 @@
-#include "insertkvpairinjson.h"
+#include "insertkvpair.h"
 
-insertKVPairInJson::insertKVPairInJson(QString srcStr)
+insertKVPair::insertKVPair(QString srcStr)
 {
     randGenerator = QRandomGenerator::system();
     // srcChar = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=[]{}|;:'\",.<>/?";
@@ -8,7 +8,7 @@ insertKVPairInJson::insertKVPairInJson(QString srcStr)
     this->m_obj = QJsonDocument::fromJson(srcStr.toUtf8()).object();
 }
 
-QString insertKVPairInJson::getRandomStr(int length)
+QString insertKVPair::getRandomStr(int length)
 {
     QString res = "";
     for (int i = 0; i < length; i ++)
@@ -18,7 +18,7 @@ QString insertKVPairInJson::getRandomStr(int length)
     return res;
 }
 
-QJsonValue insertKVPairInJson::getRandomJsonValueNum()
+QJsonValue insertKVPair::getRandomJsonValueNum()
 {
     int num = int(this->randGenerator->generate());
     if (this->randGenerator->bounded(2) == 0)   // 整数
@@ -39,7 +39,7 @@ QJsonValue insertKVPairInJson::getRandomJsonValueNum()
     }
 }
 
-QJsonArray insertKVPairInJson::getRandomJsonArray(int length)
+QJsonArray insertKVPair::getRandomJsonArray(int length)
 {
     QJsonArray res;
     for (int i = 0; i < length; i ++)
@@ -49,7 +49,7 @@ QJsonArray insertKVPairInJson::getRandomJsonArray(int length)
     return res;
 }
 
-QJsonObject insertKVPairInJson::getRandomJsonObject(int length)
+QJsonObject insertKVPair::getRandomJsonObject(int length)
 {
     QJsonObject res;
     for (int i = 0; i < length; i ++)
@@ -61,7 +61,7 @@ QJsonObject insertKVPairInJson::getRandomJsonObject(int length)
     return res;
 }
 
-QJsonValue insertKVPairInJson::getRandomJsonValue()
+QJsonValue insertKVPair::getRandomJsonValue()
 {
     int category = this->randGenerator->bounded(6);
     if (category == 0)      // 数字(整数或浮点数)
@@ -108,12 +108,12 @@ QJsonValue insertKVPairInJson::getRandomJsonValue()
     }
 }
 
-void insertKVPairInJson::insertKVPairInJsonEveryDepth()
+void insertKVPair::insertKVPairInEveryDepth()
 {
-    insertKVPairInJsonEveryDepthHelper(this->m_obj);
+    insertKVPairInEveryDepthHelper(this->m_obj);
 }
 
-void insertKVPairInJson::insertKVPairInJsonEveryDepthHelper(QJsonObject &obj)
+void insertKVPair::insertKVPairInEveryDepthHelper(QJsonObject &obj)
 {
     QVector<QString> childObjectsKeys;
     for (QString key : obj.keys())
@@ -128,7 +128,7 @@ void insertKVPairInJson::insertKVPairInJsonEveryDepthHelper(QJsonObject &obj)
     {
         QString selectedKey = childObjectsKeys.at(this->randGenerator->bounded(childObjectsKeys.size()));
         QJsonObject childObj = obj[selectedKey].toObject();
-        this->insertKVPairInJsonEveryDepthHelper(childObj);
+        this->insertKVPairInEveryDepthHelper(childObj);
         obj.insert(selectedKey, childObj);
     }
     else;
@@ -137,12 +137,12 @@ void insertKVPairInJson::insertKVPairInJsonEveryDepthHelper(QJsonObject &obj)
     obj.insert(jsonKey, jsonValue);
 }
 
-void insertKVPairInJson::randomInsertKVPairInJsonRandomDepth(double stopProbability)
+void insertKVPair::randomInsertKVPairInRandomDepth(double stopProbability)
 {
-    randomInsertKVPairInJsonRandomDepthHelper(this->m_obj, stopProbability);
+    randomInsertKVPairInRandomDepthHelper(this->m_obj, stopProbability);
 }
 
-void insertKVPairInJson::randomInsertKVPairInJsonRandomDepthHelper(QJsonObject &obj, double stopProbability)
+void insertKVPair::randomInsertKVPairInRandomDepthHelper(QJsonObject &obj, double stopProbability)
 {
     if (this->randGenerator->bounded(100) < int(stopProbability * 100))
     {
@@ -165,7 +165,7 @@ void insertKVPairInJson::randomInsertKVPairInJsonRandomDepthHelper(QJsonObject &
         {
             QString selectedKey = childObjectsKeys.at(this->randGenerator->bounded(childObjectsKeys.size()));
             QJsonObject childObj = obj[selectedKey].toObject();
-            this->randomInsertKVPairInJsonRandomDepthHelper(childObj, stopProbability);
+            this->randomInsertKVPairInRandomDepthHelper(childObj, stopProbability);
             obj.insert(selectedKey, childObj);
         }
         else;
