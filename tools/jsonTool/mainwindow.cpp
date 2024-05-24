@@ -35,7 +35,7 @@ void MainWindow::on_btnInsert_clicked()
     insertKVPair json(ui->txtEditInsertInput->toPlainText());
     if (json.getJsonObj().isEmpty())
     {
-        ui->lineEditHint->setText(QString::fromLocal8Bit("输入非法，请检查输入！"));
+        ui->lineEditHint->setText("Illegal input, please check your input!");
         ui->txtEditInsertInputDisplay->setPlainText("");
         ui->txtEditInsertOutput->setPlainText("");
     }
@@ -57,13 +57,13 @@ void MainWindow::on_btnCompare_clicked()
     json2 = QJsonDocument::fromJson(ui->txtEditCompareInput2->toPlainText().toUtf8()).object();
     if (json1.isEmpty())
     {
-        ui->lineEditHint->setText(QString::fromLocal8Bit("json1输入非法，请检查输入！"));
+        ui->lineEditHint->setText("JSON1 input is illegal, please check the input!");
         return;
     }
     else;
     if (json2.isEmpty())
     {
-        ui->lineEditHint->setText(QString::fromLocal8Bit("json2输入非法，请检查输入！"));
+        ui->lineEditHint->setText("JSON2 input is illegal, please check the input!");
         return;
     }
     else;
@@ -71,10 +71,10 @@ void MainWindow::on_btnCompare_clicked()
     ui->txtEditCompareInputDisplay2->setPlainText(QJsonDocument(json2).toJson(QJsonDocument::Indented));
     if (compareJson::isCompatible(json1, json2) == true)
     {
-        ui->lineEditHint->setText(QString::fromLocal8Bit("两json兼容"));
+        ui->lineEditHint->setText(QString::fromLocal8Bit("Two JSON are compatible"));
     }
     else
     {
-        ui->lineEditHint->setText(QString::fromLocal8Bit("两json不兼容"));
+        ui->lineEditHint->setText(QString::fromLocal8Bit("Two JSON are incompatible"));
     }
 }
