@@ -1,56 +1,31 @@
 import os
 import time
 import random
-import psutil
 import argparse
 from pywinauto.application import Application
 from pywinauto import Desktop
 
-def getProcessIds(process_name):
-    res = []
-    for proc in psutil.process_iter(['pid', 'name']):
-        if proc.info['name'] == process_name:
-            res.append(proc.info['pid'])
-    return res
-
-def getRandomStr(length):
-    srcChar = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    return ''.join(random.choices(srcChar, k=length))
+from utils import *
 
 def checkPoint1_1(dlg, filePath):
     # Check point1-1：导入网格
-    item = dlg.child_window(title="文件", control_type="TabItem")
-    if item.exists():
-        item.draw_outline()
-        item.click_input(button='left')
-    else:
-        assert False, f"未找到名称为'文件'的TabItem"
+    item = getControl(dlg, title="文件", control_type="TabItem")
+    item.click_input(button='left')
 
-    item = dlg.child_window(title="导入网格", control_type="Button")
-    if item.exists():
-        item.draw_outline()
-        item.click_input(button='left')
-    else:
-        assert False, f"未找到名称为'导入网格'的Button"
+    item = getControl(dlg, title="导入网格", control_type="Button")
+    item.click_input(button='left')
 
-    item = dlg.child_window(title="文件名(N):", control_type="Edit")
-    if item.exists():
-        item.draw_outline()
-        item.type_keys(filePath)
-    else:
-        assert False, f"未找到名称为'文件名(N):'的Edit"
+    item = getControl(dlg, title="文件名(N):", control_type="Edit")
+    item.type_keys(filePath)
 
-    item = dlg.child_window(title="打开(O)", control_type="Button")
-    if item.exists():
-        item.draw_outline()
-        item.click_input(button='left')
-        time.sleep(5) # 确保网格导入成功
-    else:
-        assert False, f"未找到名称为'打开(O)'的Button"
+    item = getControl(dlg, title="打开(O)", control_type="Button")
+    item.click_input(button='left')
+    time.sleep(5) # 确保网格导入成功
 
 def checkPoint1_2(dlg, simulationTreeNodeStart):
     # TODO Check point1-2：网格显示隐藏
     # 现暂未实现显示和隐藏功能
+    # TODO: 由于PowerPi中的控件没有名称，所以暂时无法使用getControl方法获取控件
     item = dlg.child_window(auto_id="Global.TreeView", control_type="Tree")
     simulationTreeNodeNow = [child.window_text() for child in item.children()]
     # simulationTreeNodeNow - simulationTreeNodeStart
@@ -75,6 +50,7 @@ def checkPoint1_3(dlg):
     # Check point1-3：网格属性变更
     # chooseTreeNode.draw_outline()
     # chooseTreeNode.click_input(button='left')
+    # TODO: 由于PowerPi中的控件没有名称，所以暂时无法使用getControl方法获取控件
     item = dlg.child_window(auto_id="WhiteBackground", control_type="Group")
     attributes = []
     for child in item.children():
@@ -98,12 +74,8 @@ def checkPoint1_3(dlg):
 
 def checkPoint1_4(dlg):
     # Check point1-4：网格渲染模式及方向变更
-    item = dlg.child_window(title="工作台", control_type="TabItem")
-    if item.exists():
-        item.draw_outline()
-        item.click_input(button='left')
-    else:
-        assert False, f"未找到名称为'工作台'的TabItem"
+    item = getControl(dlg, title="工作台", control_type="TabItem")
+    item.click_input(button='left')
 
     # TODO: 完善功能
     # TODO: 使用下面的匹配方式会有多个best match
@@ -139,28 +111,8 @@ def main():
     # 文件路径
     filePath = args.filepath
 
-    # 查询进程ID
     processName = "Power-PI.exe"
-    processIds = getProcessIds(processName)
-    # print("processIds =", processIds)
-    if len(processIds) > 1:
-        assert False, f"找到多个名称为'{processName}'的进程"
-
-    apps = Application(backend='uia')
-    # windows = Desktop(backend='uia')
-
-    if len(processIds) == 1:
-        apps.connect(process=processIds[0])
-    elif len(processIds) == 0:
-        if powerpiPath == None:
-            assert False, f"请输入Power-PI.exe的绝对路径"
-        elif not os.path.exists(powerpiPath):
-            assert False, f"Power-PI.exe的绝对路径'{powerpiPath}'不存在"
-        else:
-            apps.start(powerpiPath)
-    else:
-        pass
-    dlg = apps['powerpi']
+    dlg = getApp(processName=processName, powerpiPath=powerpiPath)
 
     # 保存若干初态信息
     item = dlg.child_window(auto_id="Global.TreeView", control_type="Tree")
