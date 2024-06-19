@@ -39,7 +39,7 @@ def checkPoint1_2(dlg, simulationTreeNodeStart):
             break
 
     if chooseTreeNode == None:
-        assert False, f"未找到名称为'{chooseTreeNodeName}'的TreeNode"
+        addLog("ERROR", f"未找到名称为'{chooseTreeNodeName}'的TreeNode")
     else:
         chooseTreeNode.draw_outline()
         chooseTreeNode.click_input(button='left')
@@ -99,6 +99,9 @@ def checkPoint1_6(dlg, chooseTreeNode):
         item.click_input(button='left')
 
 def main():
+    # 初始化日志模块
+    initLog()
+
     # 接收参数
     parser = argparse.ArgumentParser()
     parser.add_argument('--powerpipath', type=str, required=False, help='Power-PI的绝对路径', metavar='powerpiPath')
@@ -107,42 +110,45 @@ def main():
 
     # Power-Pi路径
     powerpiPath = args.powerpipath
+    addLog("INFO", f"Power-PI的绝对路径为：{powerpiPath}")
 
     # 文件路径
     filePath = args.filepath
+    addLog("INFO", f"测试用文件的绝对路径为：{filePath}")
 
     processName = "Power-PI.exe"
     dlg = getApp(processName=processName, powerpiPath=powerpiPath)
+    addLog("INFO", f"成功连接Power-PI")
 
     # 保存若干初态信息
     item = dlg.child_window(auto_id="Global.TreeView", control_type="Tree")
     simulationTreeNodeStart = [child.window_text() for child in item.children()]
 
-    print('测试Check Point1-1')
+    addLog("INFO", "测试Check Point1-1")
     # Check point1-1：导入网格
     checkPoint1_1(dlg, filePath)
 
-    print('测试Check Point1-2')
+    addLog("INFO", "测试Check Point1-2")
     # Check point1-2：网格显示隐藏
     chooseTreeNode = checkPoint1_2(dlg, simulationTreeNodeStart)
 
-    print('测试Check Point1-3')
+    addLog("INFO", "测试Check Point1-3")
     # Check point1-3：网格属性变更
     checkPoint1_3(dlg)
 
-    print('测试Check Point1-4')
+    addLog("INFO", "测试Check Point1-4")
     # Check point1-4：网格渲染模式及方向变更
     checkPoint1_4(dlg)
 
-    print('测试Check Point1-5')
+    addLog("INFO", "测试Check Point1-5")
     # Check point1-5：网格重命名
     checkPoint1_5(chooseTreeNode)
 
-    print('测试Check Point1-6')
+    addLog("INFO", "测试Check Point1-6")
     # Check point1-6：网格删除
     checkPoint1_6(dlg, chooseTreeNode)
 
-    print('测试结束')
+    addLog("INFO", "测试结束")
 
 if __name__ == '__main__':
     main()
