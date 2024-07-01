@@ -93,7 +93,7 @@ def checkPoint1_5(chooseTreeNode):
 def checkPoint1_6(dlg, chooseTreeNode):
     # Check point1-6：网格删除
     chooseTreeNode.click_input(button='right')
-    item = dlg.child_window(title="删除", control_type="MenuItem")
+    item = getControl(dlg, title="删除", control_type="MenuItem")
     if item.exists():
         item.draw_outline()
         item.click_input(button='left')
