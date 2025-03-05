@@ -26,6 +26,8 @@ public:
         }
     }
 
+
+
     std::vector<int> getProcessedData() {
         std::vector<int> result;
         for (int i = 0; i < length; i++) {
