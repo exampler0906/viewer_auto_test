@@ -34,6 +34,8 @@ public:
         return result;  // 返回值会导致拷贝
     }
 
+
+
 private:
     int* data;
     int length;
